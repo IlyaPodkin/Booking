@@ -1,0 +1,39 @@
+﻿<Page x:Class="Администратирование_предприятия.Notifications"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Администратирование_предприятия"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        d:DesignHeight="450" d:DesignWidth="800"
+        Title="Notifications">
+
+    <Grid>
+        <Grid 
+            Margin="60,60,0,0">
+            
+            <Grid.Background>
+                <ImageBrush ImageSource="/Image/ЗаднийФон.jpg"/>
+            </Grid.Background>
+            
+            <Frame x:Name="MyFrame" NavigationUIVisibility="Hidden"/>
+            
+            <TextBlock 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Center" 
+                FontSize="22" FontWeight="Bold"
+                Margin="0,20,0,0" 
+                Text="Уведомления" 
+                Foreground="White"/>
+            
+            <TextBlock 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center" 
+                FontSize="14" FontWeight="Bold" 
+                Margin="0,20,0,0" 
+                Text="Данный модуль недоступен, для взимодействия с ним необходим сайт для клиентов предприятия!" 
+                Foreground="White"/>
+        </Grid>
+    </Grid>
+</Page>

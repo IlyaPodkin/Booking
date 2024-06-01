@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>Администратирование_предприятия</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="1674250438_catherineasquithgallery-com-p-serii-zadnii-fon-dlya-foto-foto-75.jpg" />
+    <None Remove="1680615473_phonoteka-org-p-instrumenti-barbera-art-vkontakte-15.png" />
+    <None Remove="7a05a87882fa33687a50ba1bee21fa05.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.4" />
+    <PackageReference Include="System.Memory" Version="4.5.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Image\ЗаднийФон.jpg" />
+    <Resource Include="Image\ОсновнойФон.png" />
+    <Resource Include="Image\ФонЧасы.jpg" />
+  </ItemGroup>
+
+</Project>
