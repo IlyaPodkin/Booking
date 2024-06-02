@@ -30,17 +30,13 @@ namespace Администратирование_предприятия.View
             InputDate.Text = ViewCalendar.currentYear + "/" + ViewCalendar.currentMonth + "/" + UserControlDays.numberDayUC + "/";
             InputDate.IsReadOnly = true;
             BindItemInComboBoxTimeBoxs();
-            BlockedBoxs();        
+            uniqueTimeBoxesBlocked = TimeBoxs;
         }
 
         public List<TimeBox>? TimeBoxs { get; set; }
         public List<TimeBox>? UniqueValues { get; set; }
         ApplicationContext db = new ApplicationContext();
 
-        private void BlockedBoxs()
-        {
-            uniqueTimeBoxesBlocked = BlockedTimeBoxes();
-        }
         //Биндим ячейки времени в ComboBox
         private void BindItemInComboBoxTimeBoxs()
         {
@@ -61,45 +57,39 @@ namespace Администратирование_предприятия.View
         /// <returns></returns>
         private List<TimeBox>? BookedTimeBoxes()
         {
-            var uniqueValues = db.TimeBoxs.Where(p => p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList(); //фильтр коллекции по мастерам
-            var ValuesDate = db.SelectedDateTimeBoxes.Where(p => p.Date.Contains(InputDate.Text) && p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList(); //даты которые есть в вспомогательной таблице
-            var ValuesTime = db.SelectedDateTimeBoxes.Select(p => p.Time).ToList(); //время которое есть в вспомогательной таблице 
+            #region Старый вариант фильтрации
+            //var uniqueValues = db.TimeBoxs.Where(p => p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList(); //фильтр коллекции по мастерам
+            //var ValuesDate = db.SelectedDateTimeBoxes.Where(p => p.Date.Contains(InputDate.Text) && p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList(); //даты которые есть в вспомогательной таблице
+            //var ValuesTime = db.SelectedDateTimeBoxes.Select(p => p.Time).ToList(); //время которое есть в вспомогательной таблице 
 
-            var uniqueValuesTime = ValuesDate.Where(p => ValuesTime.Contains(p.Time) && p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList(); //фильтр коллекции по дате и времени
+            //var uniqueValuesTime = ValuesDate.Where(p => ValuesTime.Contains(p.Time) && p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList(); //фильтр коллекции по дате и времени
 
-            foreach (var uniqueValueTime in uniqueValuesTime)
-            {
-                uniqueValues = uniqueValues.Where(p => !p.Value.Contains(uniqueValueTime.Time) && p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList();
-            }
+            //foreach (var uniqueValueTime in uniqueValuesTime)
+            //{
+            //    uniqueValues = uniqueValues.Where(p => !p.Value.Contains(uniqueValueTime.Time) && p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList();
+            //}
 
-            return uniqueValues;
+            //return uniqueValues;
+            #endregion
+            // Получаем все временные интервалы для конкретного рабочего
+            var workerId = AddBooking.WorkerIdForTimeBox;
+            var allTimeBoxes = db.TimeBoxs.Where(p => p.WorkerId == workerId).ToList();
+
+            // Получаем даты и время из вспомогательной таблицы для конкретного рабочего и выбранной даты
+            var selectedDate = InputDate.Text;
+            var selectedDateTimeBoxes = db.SelectedDateTimeBoxes
+                                          .Where(p => p.Date.Contains(selectedDate) && p.WorkerId == workerId)
+                                          .Select(p => p.Time) // Берем только время
+                                          .ToList();
+
+            // Исключаем занятые временные интервалы одним разом
+            allTimeBoxes = allTimeBoxes
+                .Where(p => !selectedDateTimeBoxes.Contains(p.Value))
+                .ToList();
+
+            // Если нет доступных временных интервалов, возвращаем null
+            return allTimeBoxes.Any() ? allTimeBoxes : null;
         } 
-        
-        /// <summary>
-        /// Блокировка полностью забронированных дней
-        /// </summary>
-        /// <returns></returns>
-        private List<TimeBox>? BlockedTimeBoxes()
-        {
-            UserControlDays userControlDays = new UserControlDays();
-            List<TimeBox>? timeBoxes = new List<TimeBox>();
-            var uniqueValues = db.TimeBoxs.Where(p => p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList();//фильтр коллекции по мастерам
-            var ValuesDate = db.SelectedDateTimeBoxes.Where(p => p.Date.Contains(ViewCalendar.currentYear + "/" + ViewCalendar.currentMonth + "/" + userControlDays.NumberDay.Text + "/") && p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList(); //даты которые есть в вспомогательной таблице
-            if (ValuesDate.Count == 0) 
-            {
-                timeBoxes = uniqueValues;
-            }
-            var ValuesTime = db.SelectedDateTimeBoxes.Select(p => p.Time).ToList(); //время которое есть в вспомогательной таблице 
-
-            var uniqueValuesTime = ValuesDate.Where(p => ValuesTime.Contains(p.Time) && p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList(); //фильтр коллекции по дате и времени
-
-            foreach (var uniqueValueTime in uniqueValuesTime)
-            {
-                timeBoxes = uniqueValues.Where(p => !p.Value.Contains(uniqueValueTime.Time) && p.WorkerId == AddBooking.WorkerIdForTimeBox).ToList();
-            }
-
-            return timeBoxes;
-        }
 
         /// <summary>
         /// Кнопка добавления даты и времени

@@ -32,9 +32,20 @@ namespace Администратирование_предприятия.View
 
         private List<TimeBox>? BookedTimeBoxes()
         {
-            AddDateTime addDateTime = new AddDateTime();
-            var uniqueTimeBoxes = AddDateTime.uniqueTimeBoxesBlocked;
-            return uniqueTimeBoxes;
+            var workerId = AddBooking.WorkerIdForTimeBox;
+            var allTimeBoxes = db.TimeBoxs.Where(p => p.WorkerId == workerId).ToList();
+
+            var selectedDate = ViewCalendar.currentYear + "/" + ViewCalendar.currentMonth + "/" + NumberDay.Text + "/";
+            var selectedDateTimeBoxes = db.SelectedDateTimeBoxes
+                                          .Where(p => p.Date.Contains(selectedDate) && p.WorkerId == workerId)
+                                          .Select(p => p.Time)
+                                          .ToList();
+
+            var availableTimeBoxes = allTimeBoxes
+                .Where(p => !selectedDateTimeBoxes.Contains(p.Value))
+                .ToList();
+
+            return availableTimeBoxes.Any() ? availableTimeBoxes : null;
         }
 
         public void days(int numberDay)
@@ -46,13 +57,18 @@ namespace Администратирование_предприятия.View
             int dayOfMonth = today.Day;
             int month = today.Month;
             int year = today.Year;
-            
-            var uniqueTimeBoxes = BookedTimeBoxes();
 
-            if (uniqueTimeBoxes.Count == 0 && db.SelectedDateTimeBoxes.Any(p => p.Date == ViewCalendar.currentYear + "/" + ViewCalendar.currentMonth + "/" + NumberDay.Text + "/")) 
+            var uniqueTimeBoxes = BookedTimeBoxes();
+            string selectedDate = ViewCalendar.currentYear + "/" + ViewCalendar.currentMonth + "/" + NumberDay.Text + "/";
+
+            // Проверка, что результат BookedTimeBoxes равен null и есть ли записи с конкретной датой
+            if (uniqueTimeBoxes == null)
             {
-                BackGrid.Background = Brushes.Coral;
-                BackGrid.IsEnabled = false;
+                if (db.SelectedDateTimeBoxes.Any(p => p.Date == selectedDate))
+                {
+                    BackGrid.Background = Brushes.Coral;
+                    BackGrid.IsEnabled = false;
+                }
             }
 
             if (Convert.ToInt32(NumberDay.Text) < dayOfMonth && ViewCalendar.currentMonth == month && ViewCalendar.currentYear == year)
