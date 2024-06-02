@@ -52,7 +52,7 @@ namespace Администратирование_предприятия
         {
             Guid ID = Guid.NewGuid();//генерация гуида(ID) в бд
             string NameService = InputNameServices.Text.Trim();// получаем вводимый текст в поле наименование услуги
-            int Price = Convert.ToInt32(InputPrice.Text.Trim());// получаем вводимый текст в поле прайс
+            float Price = Convert.ToInt32(InputPrice.Text.Trim());// получаем вводимый текст в поле прайс
             string Time = InputTime.Text.Trim();// получаем вводимый текст в поле время
 
             string gradeId = InputNameGrade.Text.Trim();
@@ -64,6 +64,15 @@ namespace Администратирование_предприятия
                 gradeId = Id.Id.ToString().ToUpper();
             }
 
+            float coefficient = 0;
+            var coefficientGrade = InputNameGrade.SelectedItem as Grade;
+            if (coefficientGrade != null)
+            {
+                coefficient = coefficientGrade.Coefficient;
+            }
+
+            Price = Price * coefficient;
+
             if (NameService.Length == 0 || Price == 0 || Time.Length == 0 || gradeId.Length == 0) //вывод результата ввода и добавление значений в бд
             {
                 MessageBox.Show("Заполните пустые поля!");
@@ -71,7 +80,7 @@ namespace Администратирование_предприятия
             else
             {
                 MessageBox.Show("Услуга добавлена!");
-                Service Service = new Service(ID, NameService, grade, gradeId, Price, Time);
+                Service Service = new Service(ID, NameService, grade, gradeId, coefficient, Price, Time);
                 db.Services.Add(Service);//Добавление и сохранение данных в таблицу Service
                 db.SaveChanges();
             }

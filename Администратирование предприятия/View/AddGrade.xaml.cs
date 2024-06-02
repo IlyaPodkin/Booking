@@ -43,17 +43,28 @@ namespace Администратирование_предприятия
             Guid ID = Guid.NewGuid();//генерация гуида(ID) в бд
             string NameGrade = InputNameGrade.Text.Trim();// получаем вводимый текст в поле наименование услуги
 
-            if (NameGrade.Length == 0 ) //вывод результата ввода и добавление значений в бд
+
+            if (NameGrade.Length == 0 || InputCoefficient.Text.Length == 0) //вывод результата ввода и добавление значений в бд
             {
                 MessageBox.Show("Заполните пустые поля!");
             }
             else
             {
-                MessageBox.Show("Категория добавлена!");
-                Grade Grade = new Grade(ID, NameGrade);
-                db.Grades.Add(Grade);//Добавление и сохранение данных в таблицу Service
-                db.SaveChanges();
+                if (float.TryParse(InputCoefficient.Text, out _))
+                {
+                    float coefficient = Convert.ToSingle(InputCoefficient.Text.Trim());
+
+                    Grade Grade = new Grade(ID, NameGrade, coefficient);
+                    db.Grades.Add(Grade);//Добавление и сохранение данных в таблицу Service
+                    db.SaveChanges();
+                    MessageBox.Show("Категория добавлена!");
+                }
+                else
+                {
+                    MessageBox.Show("Некоретный формат введенных данных");
+                }
             }
+
         }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)

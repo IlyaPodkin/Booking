@@ -1,6 +1,6 @@
 ﻿namespace Администратирование_предприятия.Models;
 
-public class Booking : IEntity
+public class Booking
 {
     public Guid Id { get; set; }
     public string NameClient { get; set; }
@@ -20,7 +20,7 @@ public class Booking : IEntity
 
     public Booking(Guid Id, string NameClient, string NumberPhone, string NameWorker, string NameService, string NameProduct, string WorkerId, string ServiceId, string ProductId, string selectedDateTimeBoxesId, int Price, string Date, string Time, string Info, string IsChecked)
     {
-        this.Id = Id;
+        this.Id = Id; 
         this.NameClient = NameClient;
         this.NumberPhone = NumberPhone;
         this.NameWorker = NameWorker;

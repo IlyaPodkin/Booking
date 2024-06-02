@@ -1,6 +1,6 @@
 ﻿namespace Администратирование_предприятия.Models;
 
-public class TimeBox : IEntity
+public class TimeBox
 {
     public Guid Id { get; set; }
     public string? Value { get; set; }

@@ -94,6 +94,7 @@
                     <ComboBox 
                         x:Name="InputNameWorker" 
                         DisplayMemberPath="Name" 
+                        SelectionChanged="InputNameWorker_SelectionChanged"
                         materialDesign:HintAssist.Hint="Выберите мастера"
                         Foreground="#FFFF9B36" 
                         BorderBrush="#89F7F7F7" 

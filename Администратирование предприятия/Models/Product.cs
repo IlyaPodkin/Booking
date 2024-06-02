@@ -1,6 +1,6 @@
 ﻿namespace Администратирование_предприятия.Models;
 
-public class Product : IEntity
+public class Product
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

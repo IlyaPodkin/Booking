@@ -84,6 +84,7 @@
                 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Наименование категории" Width="200" Binding="{Binding Name}" Foreground="Black" SortDirection="Descending"/>
+                    <DataGridTextColumn Header="Коэффициент" Width="200" Binding="{Binding Coefficient}" Foreground="Black" SortDirection="Descending"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

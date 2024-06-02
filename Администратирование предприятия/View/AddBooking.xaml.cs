@@ -72,6 +72,23 @@ namespace Администратирование_предприятия
         {
             AddBookingDb();
         }
+        /// <summary>
+        /// Событие на фильтрацию ComboBox Мастеров и услуг
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void InputNameWorker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedCategory = InputNameWorker.SelectedItem as Worker;
+            if (selectedCategory == null)
+            {
+                InputNameService.ItemsSource = db.Services.ToList();
+            }
+            else
+            {
+                InputNameService.ItemsSource = db.Services.Where(p=>p.GradeId == selectedCategory.GradeId).ToList();
+            }
+        }
 
         private void AddBookingDb() //добавление бронирования в БД
         {
@@ -118,14 +135,14 @@ namespace Администратирование_предприятия
             {
                 NameProductId = IdProduct.Id.ToString().ToUpper();
             }
- 
-            var IdDateTime = db.SelectedDateTimeBoxes.Where(p=>p.Time == time || p.Date == date).Select(p=>p.Id.ToString());//достаем ID
-            foreach (var id in IdDateTime) 
+
+            var IdDateTime = db.SelectedDateTimeBoxes.Where(p => p.Time == time || p.Date == date).Select(p => p.Id.ToString());//достаем ID
+            foreach (var id in IdDateTime)
             {
                 selectedDateTimeBoxesId = id.ToString();
             }
-                //selectedDateTimeBoxesId = db.SelectedDateTimeBoxes.Where(p => p.Time == time || p.Date == date).Select(p => p.Id.ToString());
-            
+            //selectedDateTimeBoxesId = db.SelectedDateTimeBoxes.Where(p => p.Time == time || p.Date == date).Select(p => p.Id.ToString());
+
 
             if (NameClient.Length == 0 || NumberPhone.Length == 0 || NameWorker.Length == 0 || NameService.Length == 0 || date.Length == 0 || time.Length == 0 || Price == 0) //вывод результата ввода и добавление значений в бд
             {
@@ -185,5 +202,7 @@ namespace Администратирование_предприятия
             ViewCalendar calendar = new ViewCalendar();
             calendar.Show();
         }
+
+        
     }
 }

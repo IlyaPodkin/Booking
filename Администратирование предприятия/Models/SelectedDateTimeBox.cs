@@ -1,6 +1,6 @@
 ﻿namespace Администратирование_предприятия.Models;
 
-public class SelectedDateTimeBox : IEntity
+public class SelectedDateTimeBox
 {
     public Guid Id { get; set; }
     public string? Time { get; set; }

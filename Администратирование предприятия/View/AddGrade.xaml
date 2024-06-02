@@ -76,6 +76,16 @@
                     BorderBrush="#89F7F7F7" 
                     Height="52"
                     materialDesign:TextFieldAssist.UnderlineBrush="White"
+                    materialDesign:HintAssist.Foreground="White"/> 
+                <TextBox 
+                    x:Name="InputCoefficient" 
+                    materialDesign:HintAssist.Hint="Введите коэффициент" 
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                    CaretBrush="#FFF7F7F7" SelectionBrush="#FFF9F9F9" 
+                    Foreground="#FFF5F4F4" 
+                    BorderBrush="#89F7F7F7" 
+                    Height="52"
+                    materialDesign:TextFieldAssist.UnderlineBrush="White"
                     materialDesign:HintAssist.Foreground="White"/>
                 
                 <Button 
