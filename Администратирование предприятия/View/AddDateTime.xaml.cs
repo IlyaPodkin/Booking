@@ -117,6 +117,14 @@ namespace Администратирование_предприятия.View
             SelectedDateTimeBox selectedDateTimeBox = new SelectedDateTimeBox(id, time, date, TimeBoxesId, timeBoxesId);
             db.SelectedDateTimeBoxes.Add(selectedDateTimeBox);
             db.SaveChanges();
+            var windowToClose = Application.Current.Windows
+                                     .OfType<ViewCalendar>()
+                                     .FirstOrDefault();
+            // Если такое окно найдено, закройте его
+            if (windowToClose != null)
+            {
+                windowToClose.Close();
+            }
             Hide();
         }
     }

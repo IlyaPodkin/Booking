@@ -54,7 +54,6 @@ namespace Администратирование_предприятия.View
                 DayContainer.Children.Add(ucdays);
             }
         }
-
         //Закрытие окна выбора даты
         private void ButtonExitClick(object sender, RoutedEventArgs e)
         {

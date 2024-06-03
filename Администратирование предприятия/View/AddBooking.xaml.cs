@@ -103,7 +103,8 @@ namespace Администратирование_предприятия
             string NameServiceId = InputNameService.Text.Trim();
             string NameService = NameServiceId;
 
-            string NameProductId = InputNameProduct.Text.Trim();// получаем вводимый текст в поле наименование услуги
+            string? NameProductId = null;
+            NameProductId = InputNameProduct.Text.Trim();// получаем вводимый текст в поле наименование услуги
             string NameProduct = NameProductId;
 
             int Price = Convert.ToInt32(InputPrice.Text.Trim());
@@ -134,6 +135,10 @@ namespace Администратирование_предприятия
             if (IdProduct != null)
             {
                 NameProductId = IdProduct.Id.ToString().ToUpper();
+            }
+            else 
+            {
+                NameProductId = null;
             }
 
             var IdDateTime = db.SelectedDateTimeBoxes.Where(p => p.Time == time || p.Date == date).Select(p => p.Id.ToString());//достаем ID

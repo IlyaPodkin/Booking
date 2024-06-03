@@ -7,11 +7,11 @@ public class Booking
     public string NumberPhone { get; set; }
     public string NameWorker { get; set; }
     public string NameService { get; set; }
-    public string NameProduct { get; set; }
+    public string? NameProduct { get; set; }
     public int Price { get; set; }
     public string WorkerId { get; set; }
     public string ServiceId { get; set; }
-    public string ProductId { get; set; }
+    public string? ProductId { get; set; }
     public string SelectedDateTimeBoxesId { get; set; }
     public string Date { get; set; }
     public string Time { get; set; }
