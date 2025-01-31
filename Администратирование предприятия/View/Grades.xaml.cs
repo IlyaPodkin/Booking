@@ -45,8 +45,12 @@ namespace Администратирование_предприятия
             AddGrade addGrade = new AddGrade();
             addGrade.Show();
         }
+        public void Refresh() 
+        {
+            this.NavigationService.Refresh();
 
-        private void RefreshButton(object sender, RoutedEventArgs e)
+        }
+        public void RefreshButton(object sender, RoutedEventArgs e)
         {
             // получаем выделенный объект
             Grade grade = (Grade)DataGridGrades.SelectedItem;

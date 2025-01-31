@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.EntityFrameworkCore;
 using Администратирование_предприятия.Models;
@@ -35,7 +37,6 @@ namespace Администратирование_предприятия
         {
             InitializeComponent();
             Loaded += Grade_Loaded;//отработчик события для БД
-
         }
 
         private void ButtonEntryRegClick(object sender, RoutedEventArgs e)
@@ -55,8 +56,12 @@ namespace Администратирование_предприятия
                     float coefficient = Convert.ToSingle(InputCoefficient.Text.Trim());
 
                     Grade Grade = new Grade(ID, NameGrade, coefficient);
-                    db.Grades.Add(Grade);//Добавление и сохранение данных в таблицу Service
+                    db.Grades.Add(Grade);
+                    //Добавление и сохранение данных в таблицу Service
                     db.SaveChanges();
+                    Grades grade = new Grades();
+                    grade.DataGridGrades.ItemsSource = db.Grades.Local.ToBindingList();
+                    grade.Refresh();
                     MessageBox.Show("Категория добавлена!");
                 }
                 else

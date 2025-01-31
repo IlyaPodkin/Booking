@@ -97,6 +97,7 @@
 
                 <!--Текст Бокс для ввода логина-->
                 <TextBox 
+                    
                     x:Name="InputLogin" 
                     materialDesign:HintAssist.Hint="Введите логин" 
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" 

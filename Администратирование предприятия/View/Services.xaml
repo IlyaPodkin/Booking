@@ -84,7 +84,7 @@
                     <DataGridTextColumn Header="Наименование услуги" Width="200" Binding="{Binding Name}" Foreground="Black"/>
                     <DataGridTextColumn Header="Категория мастера" Width="200" Binding="{Binding GradeName}" Foreground="Black"/>
                     <DataGridTextColumn Header="Цена за услугу" Width="200" Binding="{Binding Price}" Foreground="Black"/>
-                    <DataGridTextColumn Header="Трудозатраты на услугу" Width="200" Binding="{Binding Time}" Foreground="Black"/>
+                    <!--<DataGridTextColumn Header="Трудозатраты на услугу" Width="200" Binding="{Binding Time}" Foreground="Black"/>-->
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
